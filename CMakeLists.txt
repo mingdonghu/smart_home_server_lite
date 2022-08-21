@@ -15,7 +15,7 @@ IF(NOT CMAKE_BUILD_TYPE)
 ENDIF()
 
 #设置可执行文件导出目录
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
+#set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 #设置库文件导出目录
 #set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
@@ -26,7 +26,18 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 #设置源文件路径，自动搜索源文件
 aux_source_directory(./src SRC_DIR)
 #添加需要编译的源文件目录
-add_executable(smart_home ${SRC_DIR})
+add_executable(${PROJECT_NAME} ${SRC_DIR})
 
 #生成动态库文件,libxx.so
 #add_library(xx SHAREN xx.cpp)
+
+# 安装
+SET(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/install)  # 需要install目录先行存在
+
+INSTALL(TARGETS ${PROJECT_NAME}
+RUNTIME DESTINATION lib/${PROJECT_NAME}
+)
+
+INSTALL(DIRECTORY ${PROJECT_SOURCE_DIR}/include
+DESTINATION share/${PROJECT_NAME}
+)
